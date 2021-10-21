@@ -13,6 +13,7 @@ def readAllUpTo(stop_char):
     pressed_keys = []
     pressed_numbers = []
     pressed_others = []
+    pressed_dict = {}
 
     total_numbers = 0
     total_others = 0
@@ -29,16 +30,18 @@ def readAllUpTo(stop_char):
             print('Thank you for typing ' + pressed_key)
             pressed_keys.append(pressed_key)
 
-    for pressed_key in pressed_keys:
+    for index_pressed_key, pressed_key in enumerate(pressed_keys):
         if str.isnumeric(pressed_key):
             total_numbers += 1
             pressed_numbers.append(pressed_key)
         else:
             total_others += 1
             pressed_others.append(pressed_key)
+            pressed_dict[index_pressed_key] = pressed_key
 
     print('You entered ' + str(total_numbers) + ' numbers, which are: ' + str(pressed_numbers))
     print('You entered ' + str(total_others) + ' others, which are: ' + str(pressed_others))
+    print('The dictionary is: ' + str(pressed_dict))
 
     # Colored text
 
