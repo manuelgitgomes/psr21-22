@@ -40,6 +40,11 @@ def readAllUpTo(stop_char):
             pressed_dict[index_pressed_key] = pressed_key
 
     print('You entered ' + str(total_numbers) + ' numbers, which are: ' + str(pressed_numbers))
+    pressed_numbers.sort()
+    print('When ordered, becomes: ' + str(pressed_numbers))
+    pressed_numbers_nr = list(set(pressed_numbers))
+    pressed_numbers_nr.sort()
+    print('When removing repetitions, becomes: ' + str(pressed_numbers_nr))
     print('You entered ' + str(total_others) + ' others, which are: ' + str(pressed_others))
     print('The dictionary is: ' + str(pressed_dict))
 
@@ -58,6 +63,8 @@ def readAllUpTo(stop_char):
 
     print(printStr)
 
+    lst_comp_pressed_numbers = [x for x in pressed_keys if str.isnumeric(x)]
+    print(lst_comp_pressed_numbers)
 
 def main():
     # Ex 4a
