@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import readchar
-
+from colorama import Fore, Style
 
 def printAllCharsUpTo(stop_char):
     print('Print all values up to ' + stop_char)
@@ -16,6 +16,7 @@ def readAllUpTo(stop_char):
 
     total_numbers = 0
     total_others = 0
+    counter = 0
 
     while True:
         print ('Type something (' + stop_char + ' to stop)')
@@ -39,6 +40,20 @@ def readAllUpTo(stop_char):
     print('You entered ' + str(total_numbers) + ' numbers, which are: ' + str(pressed_numbers))
     print('You entered ' + str(total_others) + ' others, which are: ' + str(pressed_others))
 
+    # Colored text
+
+    coloursList = [Fore.RED, Fore.GREEN, Fore.BLUE, Fore.MAGENTA, Fore.YELLOW, Fore.CYAN];
+
+    printStr = 'Colour party! '
+
+    for other in pressed_others:
+        printStr = printStr + coloursList[counter] + str(other) + Style.RESET_ALL
+        if counter >= len(coloursList)-1:
+            counter = 0
+        else:
+            counter += 1
+
+    print(printStr)
 
 
 def main():
