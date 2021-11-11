@@ -8,6 +8,7 @@ import cv2
 def onMouse(curr, posx, posy, last, a, image, colour):
     global pressed
 
+    # If there is a certain colour, choose the correct code
     if colour == 'r':
         ccode = (0, 0, 255)
     elif colour == 'g':
@@ -17,6 +18,7 @@ def onMouse(curr, posx, posy, last, a, image, colour):
     else:
         ccode = (255, 0, 0)
 
+    # If you click the mouse, activate the toggle variable. If you stop clicking, deactivate it.
     if curr == cv2.EVENT_LBUTTONUP:
         pressed = False
     elif curr == cv2.EVENT_LBUTTONDOWN:
@@ -52,6 +54,7 @@ def main():
     onMouseLite = partial(onMouse, image=img)
 
     while True:
+        # If you press the rgb keys, change the colour variable
         if key == ord('r'):
             colour = 'r'
         elif key == ord('g'):
@@ -59,8 +62,10 @@ def main():
         elif key == ord('b'):
             colour = 'b'
 
+        # Defining a variable
         onMouseFull = partial(onMouseLite, colour=colour)
 
+        # Set mouse callback and show the new image
         cv2.setMouseCallback(window_name, onMouseFull)
         cv2.imshow(window_name, img)
         key = cv2.waitKey(1)
