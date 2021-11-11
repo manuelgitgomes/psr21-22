@@ -1,20 +1,49 @@
 #!/usr/bin/python3
 
-import copy
 import argparse
 import cv2
 import numpy as np
-from functools import partial
 
 
-def onTrackbar(minimumB, maximumB, minimumG, maximumG, minimumR, maximumR, window_name, image_bgr, hsv):
-    dic = {'limits': {'B': {'max': maximumB, 'min': minimumB},
-                      'G': {'max': maximumG, 'min': minimumG},
-                      'R': {'max': maximumR, 'min': minimumR}}}
+def onTrackbarminB(minB):
+    global minimumB
+    minimumB = minB
+    print(minB)
+
+def onTrackbarmaxB(maxB):
+    global maximumB
+    maximumB = maxB
+
+def onTrackbarminG(minG):
+    global minimumG
+    minimumG = minG
+
+def onTrackbarmaxG(maxG):
+    global maximumG
+    maximumG = maxG
+
+def onTrackbarminR(minR):
+    global minimumR
+    minimumR = minR
+
+def onTrackbarmaxR(maxR):
+    global maximumR
+    maximumR = maxR
+
 
 
 
 def main():
+    # Global variables
+    global minimumB, minimumG, minimumR, maximumB, maximumG, maximumR
+
+    minimumB = 0
+    minimumG = 0
+    minimumR = 0
+    maximumB = 255
+    maximumG = 255
+    maximumR = 255
+
     # Create parser
     parser = argparse.ArgumentParser()
     parser.add_argument('-img', '--image', type=str, required=True, help='Full path to image file.')
@@ -32,24 +61,28 @@ def main():
     cv2.namedWindow(window_name)
     cv2.imshow(window_name, image)
 
-    # Create partial functions
-    onTrackbarLite = partial(onTrackbar, window_name=window_name, image_bgr=image, hsv=args['hue_saturation_value'])
-    onTrackbarBmin = partial(onTrackbarLite, maximumB=0, maximumG=0, maximumR=0, minimumR=0, minimumG=0)
-    onTrackbarBmax = partial(onTrackbarLite, minimumB=0, maximumG=0, maximumR=0, minimumR=0, minimumG=0)
-    onTrackbarGmin = partial(onTrackbarLite, maximumG=0, maximumB=0, maximumR=0, minimumR=0, minimumB=0)
-    onTrackbarGmax = partial(onTrackbarLite, maximumB=0, minimumG=0, maximumR=0, minimumR=0, minimumB=0)
-    onTrackbarRmin = partial(onTrackbarLite, maximumR=0, maximumG=0, maximumB=0, minimumB=0, minimumG=0)
-    onTrackbarRmax = partial(onTrackbarLite, maximumB=0, maximumG=0, minimumB=0, minimumR=0, minimumG=0)
+    cv2.createTrackbar('Min B', window_name, 0, 255, onTrackbarminB)
+    cv2.createTrackbar('Max B', window_name, 0, 255, onTrackbarmaxB)
+    cv2.createTrackbar('Min G', window_name, 0, 255, onTrackbarminG)
+    cv2.createTrackbar('Max G', window_name, 0, 255, onTrackbarmaxG)
+    cv2.createTrackbar('Min R', window_name, 0, 255, onTrackbarminR)
+    cv2.createTrackbar('Max R', window_name, 0, 255, onTrackbarmaxR)
+
+    while True:
+        ranges = {'limits': {'b': {'max': maximumB, 'min': minimumB},
+                             'g': {'max': maximumG, 'min': minimumG},
+                             'r': {'max': maximumR, 'min': minimumR}}}
+
+        mins = np.array([ranges['limits']['b']['min'], ranges['limits']['g']['min'], ranges['limits']['r']['min']])
+        maxs = np.array([ranges['limits']['b']['max'], ranges['limits']['g']['max'], ranges['limits']['r']['max']])
+        mask = cv2.inRange(image, mins, maxs)
+
+        # Show image
+        cv2.namedWindow(window_name)
+        cv2.imshow(window_name, mask)
+        cv2.waitKey(1000)
 
 
-    cv2.createTrackbar('Min B', window_name, 0, 255, onTrackbarBmin)
-    cv2.createTrackbar('Max B', window_name, 0, 255, onTrackbarBmax)
-    cv2.createTrackbar('Min G', window_name, 0, 255, onTrackbarGmin)
-    cv2.createTrackbar('Max G', window_name, 0, 255, onTrackbarGmax)
-    cv2.createTrackbar('Min R', window_name, 0, 255, onTrackbarRmin)
-    cv2.createTrackbar('Max R', window_name, 0, 255, onTrackbarRmax)
-
-    cv2.waitKey(0)
 
 if __name__ == '__main__':
     main()
