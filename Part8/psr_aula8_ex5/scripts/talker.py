@@ -4,13 +4,6 @@ import rospy
 import argparse
 from std_msgs.msg import String
 from psr_aula8_ex4.msg import Dog
-from psr_aula8_ex5.srv import SetDogName
-
-def add_two_ints_server():
-    rospy.init_node('add_two_ints_server')
-    s = rospy.Service('add_two_ints', SetDogName, handle_add_two_ints)
-    print("Ready to add two ints.")
-    rospy.spin()
 
 def main():
     # Create argparse
