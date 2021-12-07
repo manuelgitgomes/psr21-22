@@ -4,7 +4,7 @@ import argparse
 import colorama
 import rospy
 from std_msgs.msg import String
-from psr_parte09_ex_tp.msg import Dog
+from psr_parte09_scripts.msg import Dog
 
 
 def main():
@@ -31,6 +31,7 @@ def main():
         dog.brothers.append('lily')
         dog.brothers.append('boby')
 
+        print('test')
         rospy.loginfo('Publishing dog message with name ' +
                       getattr(colorama.Fore, highlight_text_color) +
                       str(dog.name) + colorama.Style.RESET_ALL)
