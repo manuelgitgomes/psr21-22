@@ -1,6 +1,9 @@
 <launch>
     <rosparam command="load" file="$(find psr_parte09_scripts)/params/params.yml" />
 
+    <!--    rqt_graph-->
+    <node name="rqt_graph" pkg="rqt_graph" type="rqt_graph"/>
+
     <!--    Publishers-->
     <node name="PublisherA" pkg="psr_parte09_scripts" type="publisher.py">
         <remap from="chatter" to="dog1"/>
