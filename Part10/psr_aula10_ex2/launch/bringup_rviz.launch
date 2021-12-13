@@ -1,0 +1,4 @@
+<launch>
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find psr_aula10_ex2)/rviz/rviz.rviz" />
+    <node pkg="rosbag" type="play" name="player" output="screen" args="--clock /home/nel/bagfiles/psr/pr2_mit_demo_pari.bag"/>
+</launch>
