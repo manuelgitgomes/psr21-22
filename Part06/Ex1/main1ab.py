@@ -7,7 +7,7 @@ import cv2
 
 def main():
     # Creating image
-    img = cv2.imread('/home/nel/catkin_ws/src/psr21-22/Part5/imgs/atlascar.png')
+    img = cv2.imread('/Part05/imgs/atlascar.png')
 
     # Window name definition
     window_name = 'window - Ex1c'
