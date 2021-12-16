@@ -9,6 +9,15 @@
     <color rgba="1 1 0 0.8"/>
 </material>
 
+<material name = 'pink'>
+    <color rgba="1 0.4 0.7 0.8"/>
+</material>
+
+<material name = 'green'>
+    <color rgba="0 1 0 0.8"/>
+</material>
+
+
 <!--Base link -->
 <link name="base_link">
     <visual>
@@ -24,15 +33,15 @@
     <parent link="base_link"/>
     <child link="link1"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="0 0 1"/>
+    <origin xyz="0 0 0.65"/>
 </joint>
 
 <!--Link 1-->
 <link name="link1">
     <visual>
-        <origin xyz="0 0 0.25"/>
+        <origin xyz="1.0 0 0.1"/>
         <geometry>
-            <box size = "2.0 0.2 0.5" />
+            <box size = "2.0 0.3 0.2" />
         </geometry>
         <material name = 'blue'/>
     </visual>
@@ -40,7 +49,7 @@
 
 <link name="link1_visual">
     <visual>
-        <origin xyz="0 0 0"/>
+        <origin xyz="0 0 0.15"/>
         <geometry>
             <cylinder length="0.3" radius="0.2" />
         </geometry>
@@ -51,7 +60,7 @@
 <joint name="link1_to_link1_visual" type="fixed">
     <parent link="link1"/>
     <child link="link1_visual"/>
-    <origin xyz="0 0 1"/>
+    <origin xyz="0 0 -0.05"/>
 </joint>
 
 
@@ -59,21 +68,69 @@
     <parent link="link1"/>
     <child link="link2"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="0 0 1"/>
+    <origin xyz="2 0 0"/>
 </joint>
 
 <!--Link 2-->
 <link name="link2">
+    <visual>
+        <origin xyz="1.0 0 0.1"/>
+        <geometry>
+            <box size = "2.0 0.3 0.2" />
+        </geometry>
+        <material name = 'pink'/>
+    </visual>
 </link>
 
-<link name="ee_link">
+<link name="link2_visual">
+    <visual>
+        <origin xyz="0 0 0.15"/>
+        <geometry>
+            <cylinder length="0.3" radius="0.2" />
+        </geometry>
+        <material name = 'pink'/>
+    </visual>
 </link>
 
-<joint name="link2_to_ee_link" type="continuous">
+<joint name="link2_to_link2_visual" type="fixed">
+    <parent link="link2"/>
+    <child link="link2_visual"/>
+    <origin xyz="0 0 -0.05"/>
+</joint>
+
+<joint name="link2_to_ee_link" type="prismatic">
     <parent link="link2"/>
     <child link="ee_link"/>
+    <limit effort="1000.0" lower="0" upper="0.6" velocity="0.5"/>
     <axis xyz="0 0 1"/>
-    <origin xyz="0 0 1"/>
+    <origin xyz="2 0 0"/>
+</joint>
+
+<!--    Ee_link-->
+<link name="ee_link">
+    <visual>
+        <origin xyz="0 0 -0.3"/>
+        <geometry>
+            <cylinder length="0.6" radius="0.05" />
+        </geometry>
+        <material name = 'green'/>
+    </visual>
+</link>
+
+<link name="ee_link_visual">
+    <visual>
+        <origin xyz="0 0 0.1"/>
+        <geometry>
+            <cylinder length="0.3" radius="0.2" />
+        </geometry>
+        <material name = 'pink'/>
+    </visual>
+</link>
+
+<joint name="link2_to_ee_link_visual" type="fixed">
+    <parent link="link2"/>
+    <child link="ee_link_visual"/>
+    <origin xyz="2 0 0"/>
 </joint>
 
 
