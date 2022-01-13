@@ -157,7 +157,7 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Name: RobotModel
-      Robot Description: robot_description
+      Robot Description: p_mgomes/robot_description
       TF Prefix: p_mgomes
       Update Interval: 0
       Value: true
@@ -166,7 +166,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: p_mgomes/base_footprint
+    Fixed Frame: p_mgomes/odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -206,9 +206,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4353983402252197
+      Pitch: 0.8553979396820068
       Target Frame: <Fixed Frame>
-      Yaw: 5.82357931137085
+      Yaw: 6.028584003448486
     Saved: ~
 Window Geometry:
   Displays:

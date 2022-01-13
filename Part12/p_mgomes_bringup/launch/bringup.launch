@@ -18,4 +18,12 @@
             <arg name="z_pos" value="$(arg z_pos)"/>
         </include>
     </group>
+    
+<!--    Calling rviz-->
+    <include file="$(find p_mgomes_bringup)/launch/visualize.launch"/>
+    
+<!--    Calling teleop key-->
+    <include file="$(find p_mgomes_bringup)/launch/teleop_key.launch">
+        <arg name="player_name" value="$(arg player_name)"/>
+    </include>
 </launch>

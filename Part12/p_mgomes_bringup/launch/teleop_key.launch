@@ -1,0 +1,8 @@
+<launch>
+  <arg name="player_name" default="p_mgomes"/>
+
+  <remap from="cmd_vel" to="$(arg player_name)/cmd_vel"/>
+
+  <node pkg="p_mgomes_bringup" type="turtlebot3_teleop_key" name="$(arg player_name)_teleop_keyboard"  output="screen">
+  </node>
+</launch>
