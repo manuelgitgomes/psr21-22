@@ -1,7 +1,18 @@
 <?xml version="1.0" ?>
-<robot name="turtlebot3_waffle_pi" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find p_mgomes_description)/urdf/properties.xacro"/>
-  <xacro:include filename="$(find p_mgomes_description)/urdf/p_mgomes.gazebo.xacro"/>
+<robot name="p_mgomes" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!--Args are local, properties are global, so we copy the values of the arguments to the properties-->
+  <xacro:arg name="player_name" default="p_mgomes" />
+  <xacro:arg name="player_color" default="Purple" /> <!-- e.g. Red, Orange. Must exist in Gazebo/Colors and be defined in properties.xacro.-->
+
+  <!--Properties are global so they can be viewed from inside the included xacros-->
+  <!--  args are used with $(arg arg_name), properties are used as ${property_name}-->
+  <xacro:property name="player_name" value="$(arg player_name)"/>
+  <xacro:property name="player_color" value="$(arg player_color)"/>
+
+  <!-- Include other files-->
+  <xacro:include filename="$(find ${player_name}_description)/urdf/properties.xacro"/>
+  <xacro:include filename="$(find ${player_name}_description)/urdf/${player_name}.gazebo.macro.xacro"/>
+  <xacro:gazebo_macro player_color="${player_color}" laser_visual="true" camera_visual="false" imu_visual="true"/>
 
   <link name="base_footprint"/>
 
