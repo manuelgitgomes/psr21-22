@@ -12,7 +12,7 @@
   <!-- Include other files-->
   <xacro:include filename="$(find ${player_name}_description)/urdf/properties.xacro"/>
   <xacro:include filename="$(find ${player_name}_description)/urdf/${player_name}.gazebo.macro.xacro"/>
-  <xacro:gazebo_macro player_color="${player_color}" laser_visual="true" camera_visual="false" imu_visual="true"/>
+  <xacro:gazebo_macro player_color="${player_color}" laser_visual="false" camera_visual="false" imu_visual="true"/>
 
   <link name="base_footprint"/>
 
