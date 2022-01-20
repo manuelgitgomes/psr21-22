@@ -10,8 +10,8 @@
   <xacro:property name="player_color" value="$(arg player_color)"/>
 
   <!-- Include other files-->
-  <xacro:include filename="$(find ${player_name}_description)/urdf/properties.xacro"/>
-  <xacro:include filename="$(find ${player_name}_description)/urdf/${player_name}.gazebo.macro.xacro"/>
+  <xacro:include filename="$(find p_mgomes_description)/urdf/properties.xacro"/>
+  <xacro:include filename="$(find p_mgomes_description)/urdf/p_mgomes.gazebo.macro.xacro"/>
   <xacro:gazebo_macro player_color="${player_color}" laser_visual="false" camera_visual="false" imu_visual="true"/>
 
   <link name="base_footprint"/>
@@ -28,7 +28,7 @@
       <geometry>
         <mesh filename="package://turtlebot3_description/meshes/bases/waffle_pi_base.stl" scale="0.001 0.001 0.001"/>
       </geometry>
-      <material name="light_black"/>
+      <material name="$(arg player_color)"/>
     </visual>
 
     <collision>
