@@ -26,4 +26,9 @@
     <include file="$(find p_mgomes_bringup)/launch/teleop_key.launch">
         <arg name="player_name" value="$(arg player_name)"/>
     </include>
+
+<!--    Calling mapping-->
+    <include file="$(find p_mgomes_bringup)/launch/mapping.launch">
+        <arg name="player_name" value="$(arg player_name)"/>
+    </include>
 </launch>

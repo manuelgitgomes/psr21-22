@@ -1,0 +1,21 @@
+<launch>
+    <arg name="player_name" default="p_mgomes"/>
+    <arg name="x_pos" default="-3.0"/>
+    <arg name="y_pos" default="1.0"/>
+    <arg name="z_pos" default="0.0"/>
+
+
+    <group ns="$(arg player_name)">
+        <param name="tf_prefix" value="$(arg player_name)"/>
+
+        <param name="robot_description" command="$(eval find('xacro') + '/xacro --inorder ' + find(arg('player_name') + '_description') + '/urdf/$(arg player_name).urdf.xacro')" />
+        <node name="$(arg player_name)/robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+        <include file="$(find p_mgomes_bringup)/launch/spawn.launch">
+            <arg name="player_name" value="$(arg player_name)"/>
+            <arg name="x_pos" value="$(arg x_pos)"/>
+            <arg name="y_pos" value="$(arg y_pos)"/>
+            <arg name="z_pos" value="$(arg z_pos)"/>
+        </include>
+    </group>
+</launch>
