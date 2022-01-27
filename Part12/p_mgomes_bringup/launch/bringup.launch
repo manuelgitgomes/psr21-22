@@ -1,6 +1,6 @@
 <launch>
     <arg name="player_name" default="p_mgomes"/>
-    <arg name="player_color" default="p_mgomes"/>
+    <arg name="player_color" default="Red"/>
     <arg name="x_pos" default="0.0"/>
     <arg name="y_pos" default="-2.0"/>
     <arg name="z_pos" default="0.0"/>

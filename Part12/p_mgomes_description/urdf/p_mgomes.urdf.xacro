@@ -2,7 +2,7 @@
 <robot name="p_mgomes" xmlns:xacro="http://ros.org/wiki/xacro">
   <!--Args are local, properties are global, so we copy the values of the arguments to the properties-->
   <xacro:arg name="player_name" default="p_mgomes" />
-  <xacro:arg name="player_color" default="Purple" /> <!-- e.g. Red, Orange. Must exist in Gazebo/Colors and be defined in properties.xacro.-->
+  <xacro:arg name="player_color" default="Red" /> <!-- e.g. Red, Orange. Must exist in Gazebo/Colors and be defined in properties.xacro.-->
 
   <!--Properties are global so they can be viewed from inside the included xacros-->
   <!--  args are used with $(arg arg_name), properties are used as ${property_name}-->
