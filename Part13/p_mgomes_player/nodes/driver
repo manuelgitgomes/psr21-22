@@ -88,8 +88,8 @@ def main():
     player_name = rospy.get_param('~player_name', 'p_mgomes')
 
     # Initiating node
-    rospy.init_node('driver', anonymous=False)
-    # Defining driver class
+    rospy.init_node('model_states_to_tf.py', anonymous=False)
+    # Defining model_states_to_tf.py class
     driver = Driver()
 
     rospy.spin()
