@@ -1,0 +1,7 @@
+<launch>
+    <arg name="player_name" default="p_mgomes"/>
+
+    <node name="$(arg player_name)" pkg="p_mgomes_player" type="driver" output="screen">
+          <param name="player_name" value="$(arg player_name)"/>
+    </node>
+</launch>

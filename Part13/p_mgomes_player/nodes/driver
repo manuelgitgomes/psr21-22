@@ -1,0 +1,99 @@
+#!/usr/bin/python3
+import copy
+import math
+
+import rospy
+import tf2_ros
+from geometry_msgs.msg import Twist
+from tf2_geometry_msgs import PoseStamped
+
+class Driver:
+
+    def __init__(self):
+        self.goal = PoseStamped()
+        self.goal_active = False
+
+        self.linear = 0
+        self.angular = 0
+
+        self.name = rospy.get_name()
+        self.name = self.name.strip('/') # remove initial /
+        rospy.loginfo('My player name is ' + self.name)
+
+        self.publisher_command = rospy.Publisher('/' + self.name + '/cmd_vel', Twist, queue_size=1)
+
+        self.tf_buffer = tf2_ros.Buffer()
+        self.listener = tf2_ros.TransformListener(self.tf_buffer)
+
+        self.timer = rospy.Timer(rospy.Duration(0.1), self.sendCommandCallback)
+
+        self.goal_subscriber = rospy.Subscriber('/move_base_simple/goal', PoseStamped, self.goalReceivedCallback)
+
+    def goalReceivedCallback(self, msg):
+        rospy.loginfo('Received new goal on frame id ' + msg.header.frame_id)
+        target_frame = self.name + '/odom'
+        rospy.loginfo(f'Changing to frame{target_frame}')
+        try:
+            self.goal = self.tf_buffer.transform(msg, target_frame, rospy.Duration(1))
+            self.goal_active = True
+            rospy.logwarn('Setting new goal')
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+            self.goal_active = False
+            rospy.logerr('Could not transform goal from ' + msg.header.frame_id + ' to ' + target_frame + '. Will ignore this goal.')
+
+    def sendCommandCallback(self, event):
+        if self.goal_active:
+            self.driveToGoal()
+        else:
+            self.linear = 0
+            self.angular = 0
+
+        rospy.loginfo(f'Sending velocities. Linear: {self.linear}; Angular: {self.angular}')
+
+        twist = Twist()
+        twist.linear.x = self.linear
+        twist.angular.z = self.angular
+        self.publisher_command.publish(twist)
+
+    def driveToGoal(self, maximum_speed=1.5, minimum_speed=0.1):
+        goal = copy.copy(self.goal)
+        goal.header.stamp = rospy.Time.now()
+        base_link = self.name + '/base_footprint'
+
+        rospy.loginfo(f'Transforming into a new set of coordinates. From {goal.header.frame_id} to {base_link}')
+        goal_in_base_link = self.tf_buffer.transform(goal, base_link, rospy.Duration(1))
+
+        x = goal_in_base_link.pose.position.x
+        y = goal_in_base_link.pose.position.y
+        angle = math.atan2(y, x)
+        rospy.loginfo(f'(x, y, angle): {(x, y, angle)}')
+
+        distance_to_goal = math.hypot(x, y)
+        velocity = min(distance_to_goal/2, maximum_speed)
+        velocity = max(velocity, minimum_speed)
+
+        if distance_to_goal <= 0.1:
+            self.angular = 0
+            self.linear = 0
+            self.goal_active = 0
+            rospy.loginfo('Goal reached')
+        else:
+            self.angular = angle
+            self.linear = velocity
+
+
+def main():
+
+    # Defining parameters
+    player_name = rospy.get_param('~player_name', 'p_mgomes')
+
+    # Initiating node
+    rospy.init_node('driver', anonymous=False)
+    # Defining driver class
+    driver = Driver()
+
+    rospy.spin()
+
+
+if __name__ == '__main__':
+    main()
